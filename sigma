@@ -1818,8 +1818,35 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/Eazvy/UILibs/refs/hea
 
 
 PvpSection:AddButton({
-	Name = "BODY CHAMS[v1]",
+	Name = "rainbow torso[usebodychams]",
 	Callback = function()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/therangedpayeer/half-rainbow-body-client-sided/refs/heads/main/body%20chams"))()
+		end
+})
+
+
+PvpSection:AddButton({
+	Name = "red body",
+	Callback = function()
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Function to make the character half-see-through and red
+local function makeCharacterRedAndSeeThrough()
+    -- Loop through all parts in the character and apply the effect
+    for _, part in pairs(character:GetChildren()) do
+        if part:IsA("BasePart") then
+            -- Make part half-see-through (transparency 0.5)
+            part.Transparency = 0.9
+            -- Change part color to red
+            part.Color = Color3.fromRGB(255, 106, 84)
+        end
+    end
+end
+
+-- Call the function when the character is added
+character:WaitForChild("HumanoidRootPart") -- Ensure the character is fully loaded before applying the changes
+makeCharacterRedAndSeeThrough()
+
 		end
 })
