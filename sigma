@@ -61,38 +61,42 @@ local Parts = {"Head", "HumanoidRootPart", "Torso", "Left Arm", "Right Arm", "Le
 Library.UnloadCallback = Functions.Exit
 
 local MainFrame = Library:CreateWindow({
-	Name = "SIGMA YURI[v3.1]",
+	Name = "SIGMA YURI[v3.2]",
 	Themeable = {
 		Image = "348864556",
 		Info = "universal GUI",
 		Credit = false
 	},
 	Background = "348864556",
-	Theme = [[{"__Designer.Colors.section":"255, 9, 179","__Designer.Colors.topGradient":"1B242F","__Designer.Settings.ShowHideKey":"Enum.KeyCode.RShift","__Designer.Colors.otherElementText":"54637D","__Designer.Colors.hoveredOptionBottom":"38667D","__Designer.Background.ImageAssetID":"348864556","__Designer.Colors.unhoveredOptionTop":"407495","__Designer.Colors.innerBorder":"2C4168","__Designer.Colors.unselectedOption":"4E6EA0","__Designer.Background.UseBackgroundImage":true,"__Designer.Files.WorkspaceFile":"Aimbot V2","__Designer.Colors.main":"23A0FF","__Designer.Colors.outerBorder":"162943","__Designer.Background.ImageColor":"FFFFFF","__Designer.Colors.tabText":"C9DFF1","__Designer.Colors.elementBorder":"111D26","__Designer.Colors.sectionBackground":"0E141C","__Designer.Colors.selectedOption":"558AC2","__Designer.Colors.background":"11182A","__Designer.Colors.bottomGradient":"202B42","__Designer.Background.ImageTransparency":0,"__Designer.Colors.hoveredOptionTop":"4885A0","__Designer.Colors.elementText":"7692B8","__Designer.Colors.unhoveredOptionBottom":"5471C4"}]]
-})
+	Theme = [[{"__Designer.Colors.section":"107, 9, 19","__Designer.Colors.topGradient":"1B242F","__Designer.Settings.ShowHideKey":"Enum.KeyCode.RShift","__Designer.Colors.otherElementText":"54637D","__Designer.Colors.hoveredOptionBottom":"38667D","__Designer.Background.ImageAssetID":"348864556","__Designer.Colors.unhoveredOptionTop":"407495","__Designer.Colors.innerBorder":"2C4168","__Designer.Colors.unselectedOption":"4E6EA0","__Designer.Background.UseBackgroundImage":true,"__Designer.Files.WorkspaceFile":"Aimbot V2","__Designer.Colors.main":"23A0FF","__Designer.Colors.outerBorder":"162943","__Designer.Background.ImageColor":"FFFFFF","__Designer.Colors.tabText":"C9DFF1","__Designer.Colors.elementBorder":"111D26","__Designer.Colors.sectionBackground":"0E141C","__Designer.Colors.selectedOption":"558AC2","__Designer.Colors.background":"11182A","__Designer.Colors.bottomGradient":"202B42","__Designer.Background.ImageTransparency":0,"__Designer.Colors.hoveredOptionTop":"4885A0","__Designer.Colors.elementText":"7692B8","__Designer.Colors.unhoveredOptionBottom":"5471C4"}]]})
 
 --// Tabs
 
 local SettingsTab = MainFrame:CreateTab({
-	Name = "AIMBOT--"
+	Name = "A"
 })
 
 local FOVSettingsTab = MainFrame:CreateTab({
-	Name = "FOV CONFIGS--"
+	Name = "F"
 })
 
 local FunctionsTab = MainFrame:CreateTab({
-	Name = "DA HOOD.copys"
+	Name = "_MOVEMENT_AIMBOT_"
 })
 
 
-local PVPTab = MainFrame:CreateTab({
-	Name = "soon..."
+local PvpTab = MainFrame:CreateTab({
+	Name = "_ESP"
 })
 
 
 
 --// Settings - Sections
+
+local Values = PvpTab:CreateSection({
+	Name = "Visuals"
+})
+
 
 local Values = SettingsTab:CreateSection({
 	Name = "Values"
@@ -123,18 +127,18 @@ local FunctionsSection = FunctionsTab:CreateSection({
 })
 
 
-local PVPSection = FunctionsTab:CreateSection({
-	Name = "legit pvp"
+local PvpSection = PvpTab:CreateSection({
+	Name = "visual"
 })
 --// Settings / Values
 
 Values:AddToggle({
-	Name = "Enabled",
+	Name = "TURN ME OFF",
 	Value = Settings.Enabled,
 	Callback = function(New, Old)
 		Settings.Enabled = New
 	end
-}).Default = Settings.Enabled
+}).Default = Settings.Toggle
 
 Values:AddToggle({
 	Name = "Toggle",
@@ -234,6 +238,9 @@ ThirdPerson:AddSlider({
 }).Default = Settings.ThirdPersonSensitivity
 
 --// FOV Settings / Values
+
+
+
  
 FOV_Values:AddToggle({
 	Name = "Enabled",
@@ -319,259 +326,10 @@ FOV_Appearance:AddColorpicker({
 }).Default = FOVSettings.LockedColor
 
 
-FunctionsSection:AddButton({
-	Name = "BOX ESP",
-	Callback = function()
--- Services
-local RunService = game:GetService("RunService");
-local PlayersService = game:GetService("Players");
-
--- Variables
-local Camera = workspace.CurrentCamera;
-local LastPos;
-local Lines = {};
-local Quads = {};
-
--- Functions
-local function HasCharacter(Player)
-    return Player.Character and Player.Character:FindFirstChild("HumanoidRootPart");
-end;
-
-local function DrawQuad(PosA, PosB, PosC, PosD)
-    local PosAScreen, PosAVisible = Camera:WorldToViewportPoint(PosA);
-    local PosBScreen, PosBVisible = Camera:WorldToViewportPoint(PosB);
-    local PosCScreen, PosCVisible = Camera:WorldToViewportPoint(PosC);
-    local PosDScreen, PosDVisible = Camera:WorldToViewportPoint(PosD);
-
-    if (not PosAVisible and not PosBVisible and not PosCVisible and not PosDVisible) then return; end;
-
-    local PosAVec = Vector2.new(PosAScreen.X, PosAScreen.Y);
-    local PosBVec = Vector2.new(PosBScreen.X, PosBScreen.Y);
-    local PosCVec = Vector2.new(PosCScreen.X, PosCScreen.Y);
-    local PosDVec = Vector2.new(PosDScreen.X, PosDScreen.Y);
-
-    local Quad = Drawing.new("Quad");
-        Quad.Thickness = .5;
-        Quad.Color = Color3.fromRGB(255, 255, 255);
-        Quad.Transparency = .25;
-        Quad.ZIndex = 1;
-        Quad.Filled = true
-        Quad.Visible = true;
-
-        Quad.PointA = PosAVec;
-        Quad.PointB = PosBVec;
-        Quad.PointC = PosCVec;
-        Quad.PointD = PosDVec;
-
-    table.insert(Quads, Quad)
-end
-
-local function DrawLine(From, To)
-    local FromScreen, FromVisible = Camera:WorldToViewportPoint(From);
-    local ToScreen, ToVisible = Camera:WorldToViewportPoint(To);
-
-    if (not FromVisible and not ToVisible) then return; end;
-
-    local FromPos = Vector2.new(FromScreen.X, FromScreen.Y);
-    local ToPos = Vector2.new(ToScreen.X, ToScreen.Y);
-
-    local Line = Drawing.new("Line");
-        Line.Thickness = 1;
-        Line.From = FromPos
-        Line.To = ToPos
-        Line.Color = Color3.fromRGB(255, 255, 255);
-        Line.Transparency = 1;
-        Line.ZIndex = 1;
-        Line.Visible = true;
-
-    table.insert(Lines, Line)
-end
-
--- Thank you Nahida#5000 for this function (GetCorners = GetVertices)
-local function GetCorners(Part)
-    local CF, Size, Corners = Part.CFrame, Part.Size / 2, {};
-    for X = -1, 1, 2 do for Y = -1, 1, 2 do for Z = -1, 1, 2 do
-        Corners[#Corners+1] = (CF * CFrame.new(Size * Vector3.new(X, Y, Z))).Position;      
-    end; end; end;
-    return Corners;
-end;
-
-local function DrawEsp(Player)
-    local HRP = Player.Character.HumanoidRootPart;
-
-    -- Constructing the 3d box.
-    local CubeVertices = GetCorners({CFrame = HRP.CFrame * CFrame.new(0, -0.5, 0), Size = Vector3.new(3, 5, 3)});
-
-    -- Drawing the 3d box.
-        -- Bottom face:
-        DrawLine(CubeVertices[1], CubeVertices[2]);
-        DrawLine(CubeVertices[2], CubeVertices[6]);
-        DrawLine(CubeVertices[6], CubeVertices[5]);
-        DrawLine(CubeVertices[5], CubeVertices[1]);
-
-        DrawQuad(CubeVertices[1], CubeVertices[2], CubeVertices[6], CubeVertices[5]);
-       
-        -- Side faces:
-        DrawLine(CubeVertices[1], CubeVertices[3]);
-        DrawLine(CubeVertices[2], CubeVertices[4]);
-        DrawLine(CubeVertices[6], CubeVertices[8]);
-        DrawLine(CubeVertices[5], CubeVertices[7]);
-
-        DrawQuad(CubeVertices[2], CubeVertices[4], CubeVertices[8], CubeVertices[6]);
-        DrawQuad(CubeVertices[1], CubeVertices[2], CubeVertices[4], CubeVertices[3]);
-        DrawQuad(CubeVertices[1], CubeVertices[5], CubeVertices[7], CubeVertices[3]);
-        DrawQuad(CubeVertices[5], CubeVertices[7], CubeVertices[8], CubeVertices[6]);
-
-        -- Top face:
-        DrawLine(CubeVertices[3], CubeVertices[4]);
-        DrawLine(CubeVertices[4], CubeVertices[8]);
-        DrawLine(CubeVertices[8], CubeVertices[7]);
-        DrawLine(CubeVertices[7], CubeVertices[3]);
-       
-        DrawQuad(CubeVertices[3], CubeVertices[4], CubeVertices[8], CubeVertices[7]);
-end;
-
-local function BoxEsp()
-    local Players = PlayersService:GetPlayers();
-
-    for i = 1, #Lines do
-        local Line = rawget(Lines, i);
-        if (Line) then Line:Remove(); end;
-    end;
-
-    Lines = {};
-
-    for i = 1, #Quads do
-        local Quad = rawget(Quads, i);
-        if (Quad) then Quad:Remove(); end;
-    end;
-
-    Quads = {};
-
-    for i = 1, #Players do
-        local Player = rawget(Players, i);
-        if HasCharacter(Player) then
-            DrawEsp(Player);
-        end;
-    end;
-end;
-
--- Main
-RunService.RenderStepped:Connect(BoxEsp);
-	end
-})
 
 
-FunctionsSection:AddButton({
-	Name = "distance esp",
-	Callback = function()
 
 
---
-
---dear sigma yuri user its too hard to make a distance esp so who every made this credits to you
-
-
----this also may not apear on some players i am not sure why
-local c = workspace.CurrentCamera
-local ps = game:GetService("Players")
-local lp = ps.LocalPlayer
-local rs = game:GetService("RunService")
-
-local function esp(p, cr)
-    local h = cr:WaitForChild("Humanoid")
-    local hrp = cr:WaitForChild("HumanoidRootPart") -- HumanoidRootPart for position
-
-    local textLabel = Drawing.new("Text")
-    textLabel.Visible = false
-    textLabel.Center = true
-    textLabel.Outline = false
-    textLabel.Font = 6
-    textLabel.Size = 11
-    textLabel.Color = Color3.new(1, 1, 1) -- Beyaz ("Distance:")
-
-    local distanceLabel = Drawing.new("Text")
-    distanceLabel.Visible = false
-    distanceLabel.Center = true
-    distanceLabel.Outline = false
-    distanceLabel.Font = 4
-    distanceLabel.Size = 11
-    distanceLabel.Color = Color3.new(1, 0.5, 0) -- Turuncu (mesafe)
-
-    local conection
-    local conection2
-    local conection3
-
-    local function dc()
-        textLabel.Visible = false
-        textLabel:Remove()
-        distanceLabel.Visible = false
-        distanceLabel:Remove()
-        if conection then
-            conection:Disconnect()
-            conection = nil
-        end
-        if conection2 then
-            conection2:Disconnect()
-            conection2 = nil
-        end
-        if conection3 then
-            conection3:Disconnect()
-            conection3 = nil
-        end
-    end
-
-    conection2 = cr.AncestryChanged:Connect(function(_, parent)
-        if not parent then
-            dc()
-        end
-    end)
-
-    conection3 = h.HealthChanged:Connect(function(v)
-        if (v <= 0) or (h:GetState() == Enum.HumanoidStateType.Dead) then
-            dc()
-        end
-    end)
-
-    conection = rs.RenderStepped:Connect(function()
-        local hrp_pos, hrp_onscreen = c:WorldToViewportPoint(hrp.Position)
-        if hrp_onscreen then
-            -- Mesafeyi hesapla
-            local distance = (lp.Character.HumanoidRootPart.Position - hrp.Position).Magnitude
-            -- "Distance:" yazısını ayarla
-            textLabel.Position = Vector2.new(hrp_pos.X, hrp_pos.Y + 39) -- 39 piksel aşağıya
-            textLabel.Text = "Distance:"
-            textLabel.Visible = true
-
-            -- Mesafe değerini ayarla ve "Distance:" yazısının yanına yerleştir
-            distanceLabel.Position = Vector2.new(hrp_pos.X + textLabel.TextBounds.X + 5, hrp_pos.Y + 39) -- 39 piksel aşağıya
-            distanceLabel.Text = string.format("%.1f", distance) -- Mesafeyi yuvarla
-            distanceLabel.Visible = true
-        else
-            textLabel.Visible = false
-            distanceLabel.Visible = false
-        end
-    end)
-end
-
-local function p_added(p)
-    if p.Character then
-        esp(p, p.Character)
-    end
-    p.CharacterAdded:Connect(function(cr)
-        esp(p, cr)
-    end)
-end
-
-for i, p in next, ps:GetPlayers() do
-    if p ~= lp then
-        p_added(p)
-    end
-end
-
-ps.PlayerAdded:Connect(p_added)
-	end
-})
 
 
 
@@ -617,95 +375,13 @@ _G.HeadSize = 1.3 _G.Disabled = true game:GetService('RunService').RenderStepped
 	end
 })
 
-
+------
 FunctionsSection:AddButton({
-	Name = "HOOD CUSTOMS",
-
-
-
-	-----------------
-	Callback = function()
-local function NewLine(thickness, color)
-    local line = Drawing.new("Line")
-    line.Visible = false
-    line.From = Vector2.new(0, 0)
-    line.To = Vector2.new(0, 0)
-    line.Color = color
-    line.Thickness = thickness
-    line.Transparency = 1
-    return line
-end
-
-local function HealthBar(plr)
-    local library = {
-        -- Sağlık barı çizgileri
-        healthbar = NewLine(3, Color3.fromRGB(1, 0, 0)),  -- Arka plan çizgisi
-        greenhealth = NewLine(1.5, Color3.fromRGB(105, 255, 62))  -- Sağlık durumu çizgisi (yeşil)
-    }
-
-    -- Health bar'ı sürekli güncelleyen fonksiyon
-    local function Updater()
-        local connection
-        connection = game:GetService("RunService").RenderStepped:Connect(function()
-            if plr.Character ~= nil and plr.Character:FindFirstChild("Humanoid") ~= nil and plr.Character:FindFirstChild("HumanoidRootPart") ~= nil and plr.Character.Humanoid.Health > 0 and plr.Character:FindFirstChild("Head") ~= nil then
-                local HumPos, OnScreen = game:GetService("Workspace").CurrentCamera:WorldToViewportPoint(plr.Character.HumanoidRootPart.Position)
-                if OnScreen then
-                    local head = game:GetService("Workspace").CurrentCamera:WorldToViewportPoint(plr.Character.Head.Position)
-                    local DistanceY = math.clamp((Vector2.new(head.X, head.Y) - Vector2.new(HumPos.X, HumPos.Y)).magnitude, 2, math.huge)
-
-                    -- Barın boyutunu hesaplama
-                    local d = (Vector2.new(HumPos.X - DistanceY, HumPos.Y - DistanceY*2) - Vector2.new(HumPos.X - DistanceY, HumPos.Y + DistanceY*2)).magnitude
-                    local healthoffset = plr.Character.Humanoid.Health / plr.Character.Humanoid.MaxHealth * d
-
-                    -- Sağlık barını güncelleme
-                    library.greenhealth.From = Vector2.new(HumPos.X - DistanceY - 4, HumPos.Y + DistanceY*2)
-                    library.greenhealth.To = Vector2.new(HumPos.X - DistanceY - 4, HumPos.Y + DistanceY*2 - healthoffset)
-
-                    library.healthbar.From = Vector2.new(HumPos.X - DistanceY - 4, HumPos.Y + DistanceY*2)
-                    library.healthbar.To = Vector2.new(HumPos.X - DistanceY - 4, HumPos.Y - DistanceY*2)
-
-                    -- Sağlık çubuğunun rengini ayarlama (Kırmızıdan Yeşile geçiş)
-                    local green = Color3.fromRGB(0, 255, 0)
-                    local red = Color3.fromRGB(255, 0, 0)
-                    library.greenhealth.Color = red:lerp(green, plr.Character.Humanoid.Health / plr.Character.Humanoid.MaxHealth)
-
-                    -- Sağlık çubuğunu görünür yapma
-                    library.greenhealth.Visible = true
-                    library.healthbar.Visible = true
-                else
-                    -- Eğer oyuncu ekran dışında ise, sağlık çubuğunu gizle
-                    library.greenhealth.Visible = false
-                    library.healthbar.Visible = false
-                end
-            else
-                -- Eğer oyuncu öldü veya yoksa, sağlık çubuğunu gizle
-                library.greenhealth.Visible = false
-                library.healthbar.Visible = false
-            end
-        end)
-    end
-
-    -- Çubuğu başlatmak için Updater fonksiyonunu çalıştır
-    coroutine.wrap(Updater)()
-end
-
--- Mevcut oyuncuları kontrol et
-for i, v in pairs(game:GetService("Players"):GetPlayers()) do
-    if v.Name ~= game:GetService("Players").LocalPlayer.Name then
-        coroutine.wrap(HealthBar)(v)
-    end
-end
-
--- Yeni oyuncular eklenince sağlık çubuğunu başlat
-game.Players.PlayerAdded:Connect(function(newplr)
-    if newplr.Name ~= game:GetService("Players").LocalPlayer.Name then
-        coroutine.wrap(HealthBar)(newplr)
-    end
-end)
-	------
-_G.HeadSize = 2 _G.Disabled = true game:GetService('RunService').RenderStepped:connect(function() if _G.Disabled then for i,v in next, game:GetService('Players'):GetPlayers() do if v.Name ~= game:GetService('Players').LocalPlayer.Name then pcall(function() v.Character.Head.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize) v.Character.Head.Transparency = 5 v.Character.Head.BrickColor = BrickColor.new("Yellow") v.Character.Head.Material = "Neon" v.Character.Head.CanCollide = false v.Character.Head.Massless = true end) end end end end)
+	Name = "HD{head[94%hit]}",
+Callback = function()
+_G.HeadSize = 2.4 _G.Disabled = true game:GetService('RunService').RenderStepped:connect(function() if _G.Disabled then for i,v in next, game:GetService('Players'):GetPlayers() do if v.Name ~= game:GetService('Players').LocalPlayer.Name then pcall(function() v.Character.Head.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize) v.Character.Head.Transparency = 5 v.Character.Head.BrickColor = BrickColor.new("Yellow") v.Character.Head.Material = "Neon" v.Character.Head.CanCollide = false v.Character.Head.Massless = true end) end end end end)
 	end
-})
+})	
 
 FunctionsSection:AddButton({
 	Name = "BYPASSED FLY V [cframe]",
@@ -2027,6 +1703,75 @@ end)
 	end
 })
 
---the section below is for rivals btw
+--This is the esp tab below btw
 
 ---------------------------------------------------------------------------------------------------
+
+----
+
+
+
+PvpSection:AddButton({
+	Name = "player health",
+	Callback = function()
+--healthbar esp
+
+local function ApplyESP(v)
+   if v.Character and v.Character:FindFirstChildOfClass'Humanoid' then
+       v.Character.Humanoid.NameDisplayDistance = 102
+       v.Character.Humanoid.NameOcclusion = "NoOcclusion"
+       v.Character.Humanoid.HealthDisplayDistance = 100
+       v.Character.Humanoid.HealthDisplayType = "AlwaysOn"
+       v.Character.Humanoid.Health = v.Character.Humanoid.Health -- triggers changed
+   end
+end
+for i,v in pairs(game.Players:GetPlayers()) do
+   ApplyESP(v)
+   v.CharacterAdded:Connect(function()
+       task.wait(0.33)
+       ApplyESP(v)
+   end)
+end
+
+game.Players.PlayerAdded:Connect(function(v)
+   ApplyESP(v)
+   v.CharacterAdded:Connect(function()
+       task.wait(0.33)
+       ApplyESP(v)
+	   end)
+	   end)
+	end
+})
+
+
+---------------------------
+
+
+
+
+PvpSection:AddButton({
+	Name = "skeleton",
+	Callback = function()
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/Blissful4992/ESPs/main/UniversalSkeleton.lua"))()
+
+
+local Skeletons = {}
+for _, Player in next, game.Players:GetChildren() do
+	table.insert(Skeletons, Library:NewSkeleton(Player, true));
+end
+game.Players.PlayerAdded:Connect(function(Player)
+	table.insert(Skeletons, Library:NewSkeleton(Player, true));
+end)
+
+		end
+})
+
+
+
+
+
+
+------------------------------------------------
+
+--
+
