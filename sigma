@@ -30,6 +30,26 @@
 
 
 
+                                                                                                                                               
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -382,6 +402,17 @@ Callback = function()
 _G.HeadSize = 2.4 _G.Disabled = true game:GetService('RunService').RenderStepped:connect(function() if _G.Disabled then for i,v in next, game:GetService('Players'):GetPlayers() do if v.Name ~= game:GetService('Players').LocalPlayer.Name then pcall(function() v.Character.Head.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize) v.Character.Head.Transparency = 5 v.Character.Head.BrickColor = BrickColor.new("Yellow") v.Character.Head.Material = "Neon" v.Character.Head.CanCollide = false v.Character.Head.Massless = true end) end end end end)
 	end
 })	
+
+
+
+FunctionsSection:AddButton({
+	Name = "HD{blatant[100%]}",
+Callback = function()
+_G.HeadSize = 3 _G.Disabled = true game:GetService('RunService').RenderStepped:connect(function() if _G.Disabled then for i,v in next, game:GetService('Players'):GetPlayers() do if v.Name ~= game:GetService('Players').LocalPlayer.Name then pcall(function() v.Character.Head.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize) v.Character.Head.Transparency = 5 v.Character.Head.BrickColor = BrickColor.new("Yellow") v.Character.Head.Material = "Neon" v.Character.Head.CanCollide = false v.Character.Head.Massless = true end) end end end end)
+	end
+})	
+
+-----------------------------
 
 FunctionsSection:AddButton({
 	Name = "BYPASSED FLY V [cframe]",
@@ -1740,6 +1771,7 @@ game.Players.PlayerAdded:Connect(function(v)
        ApplyESP(v)
 	   end)
 	   end)
+
 	end
 })
 
@@ -1774,4 +1806,9 @@ end)
 ------------------------------------------------
 
 --
-
+PvpSection:AddButton({
+	Name = "RADAR",
+	Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Eazvy/UILibs/refs/heads/main/ESP/Arrows/Example"))()
+		end
+})
