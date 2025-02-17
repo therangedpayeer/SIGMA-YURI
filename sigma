@@ -1812,3 +1812,14 @@ PvpSection:AddButton({
 loadstring(game:HttpGet("https://raw.githubusercontent.com/Eazvy/UILibs/refs/heads/main/ESP/Arrows/Example"))()
 		end
 })
+
+
+
+
+
+PvpSection:AddButton({
+	Name = "BODY CHAMS[v1]",
+	Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/therangedpayeer/half-rainbow-body-client-sided/refs/heads/main/body%20chams"))()
+		end
+})
