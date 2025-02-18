@@ -10,30 +10,38 @@
 
 
 
+---
+--17th /feb/ 25
+
+--color changing avatar effect
+--better hood customs presets
+
+--hoping for more and better features soon!
+
+
+
+
+
+--
 
 
 
 
 
 
+ -- #####  #    # ### ######   #####     #     # #######  #####   #####     #     #####  ####### 
+ --#     # #   #   #  #     # #     #    ##   ## #       #     # #     #   # #   #     # #       
+ --#       #  #    #  #     # #          # # # # #       #       #        #   #  #       #       
+ -- #####  ###     #  #     #  #####     #  #  # #####    #####   #####  #     # #  #### #####   
+ --      # #  #    #  #     #       #    #     # #             #       # ####### #     # #       
+ --#     # #   #   #  #     # #     #    #     # #       #     # #     # #     # #     # #       
+ -- #####  #    # ### ######   #####     #     # #######  #####   #####  #     #  #####  ####### 
+                                                                                               
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+--   YOU CAN STEAL ANYTHING HERE EVEN REPOST IT AND MAKE ALL OF IT YOURS IT DOES NOT MATTER TO ME
 
 
 
@@ -1882,7 +1890,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/therangedpayeer/half-
 
 
 PvpSection:AddButton({
-	Name = "red body",
+	Name = "red body[clear]",
 	Callback = function()
 local player = game.Players.LocalPlayer
 local character = player.Character or player.CharacterAdded:Wait()
@@ -1895,7 +1903,7 @@ local function makeCharacterRedAndSeeThrough()
             -- Make part half-see-through (transparency 0.5)
             part.Transparency = 0.7
             -- Change part color to red
-            part.Color = Color3.fromRGB(255, 106, 84)
+            part.Color = Color3.fromRGB(255, 0, 0)
         end
     end
 end
@@ -1905,4 +1913,343 @@ character:WaitForChild("HumanoidRootPart") -- Ensure the character is fully load
 makeCharacterRedAndSeeThrough()
 
 		end
+})
+
+
+
+
+
+
+PvpSection:AddButton({
+	Name = "WHITE[clearish]",
+	Callback = function()
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Function to make the character half-see-through and red
+local function makeCharacterRedAndSeeThrough()
+    -- Loop through all parts in the character and apply the effect
+    for _, part in pairs(character:GetChildren()) do
+        if part:IsA("BasePart") then
+            -- Make part half-see-through (transparency 0.5)
+            part.Transparency = 0.6
+            -- Change part color to red
+            part.Color = Color3.fromRGB(255, 255, 255)
+        end
+    end
+end
+
+-- Call the function when the character is added
+character:WaitForChild("HumanoidRootPart") -- Ensure the character is fully loaded before applying the changes
+makeCharacterRedAndSeeThrough()
+
+		end
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------
+
+
+
+
+
+
+
+
+
+
+PvpSection:AddButton({
+	Name = "watermelonREDISH[clear]",
+	Callback = function()
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Function to make the character half-see-through and red
+local function makeCharacterRedAndSeeThrough()
+    -- Loop through all parts in the character and apply the effect
+    for _, part in pairs(character:GetChildren()) do
+        if part:IsA("BasePart") then
+            -- Make part half-see-through (transparency 0.5)
+            part.Transparency = 0.6
+            -- Change part color to red
+            part.Color = Color3.fromRGB(253, 70, 89)
+        end
+    end
+end
+
+-- Call the function when the character is added
+character:WaitForChild("HumanoidRootPart") -- Ensure the character is fully loaded before applying the changes
+makeCharacterRedAndSeeThrough()
+
+		end
+})
+----------------------------
+
+
+
+PvpSection:AddButton({
+	Name = "rainbow{clear}",
+	Callback = function()
+-- LocalScript inside StarterPlayer -> StarterPlayerScripts
+
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Function to apply neon material and make head invisible
+local function applyNeonEffect()
+    -- Wait for the character to fully load
+    character:WaitForChild("Head")
+
+    -- Make the head invisible
+    local head = character:FindFirstChild("Head")
+    if head then
+        head.Transparency = 1 -- Fully invisible head
+        head.CanCollide = false -- Disable collision for the head
+    end
+
+    -- Apply neon material and color-changing effect to body parts
+    for _, part in pairs(character:GetChildren()) do
+        if part:IsA("BasePart") and part.Name ~= "Head" then
+            part.Material = Enum.Material.ForceField
+        end
+    end
+end
+
+-- Function to continuously change the colors of body parts
+local function changeBodyColors()
+    while true do
+        local time = tick()  -- Get current time
+        local colorValue = math.sin(time) / 2 + 0.5 -- Smooth color oscillation
+
+        -- Calculate a new color based on the oscillation value
+        local color = Color3.fromHSV(colorValue, 1, 1)  -- Change color over time (Rainbow effect)
+
+        -- Apply the color to each part (except head)
+        for _, part in pairs(character:GetChildren()) do
+            if part:IsA("BasePart") and part.Name ~= "Head" then
+                part.Color = color
+            end
+        end
+
+        wait(0.0000000000000000000000000000005)  -- Wait for a short time before the next color update
+    end
+end
+
+-- Apply effects when the character is loaded or respawns
+character:WaitForChild("HumanoidRootPart")
+applyNeonEffect()
+
+-- Start color-changing loop
+spawn(changeBodyColors)
+
+-- Apply the effects when the character respawns
+player.CharacterAdded:Connect(function(char)
+    character = char
+    character:WaitForChild("HumanoidRootPart")
+    applyNeonEffect()
+    spawn(changeBodyColors)  -- Start the color-changing effect again after respawn
+end)
+
+end
+})
+
+
+
+
+
+
+
+
+
+
+
+PvpSection:AddButton({
+	Name = "color flashing{WHITE}",
+	Callback = function()
+-- Place this script in a LocalScript (for client-side execution)
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+
+-- Function to make the character neon and invisible
+local function toggleNeonInvisibility()
+    while true do
+        -- Make all parts bright neon
+        for _, part in ipairs(character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.Material = Enum.Material.Neon
+                part.Color = Color3.fromRGB(255, 255, 255)  -- Change color to bright red
+            end
+        end
+        
+        -- Wait a little bit before making the character invisible
+        wait(0.3)
+        
+        -- Make all parts invisible
+        for _, part in ipairs(character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.Transparency = 1  -- Full transparency (invisible)
+            end
+        end
+        
+        -- Wait a little bit before showing the character again
+        wait(0)
+        
+        -- Make the character visible again
+        for _, part in ipairs(character:GetDescendants()) do
+            if part:IsA("BasePart") then
+                part.Transparency = 0  -- Full opacity (visible)
+            end
+        end
+    end
+end
+
+-- Start the neon invisibility loop
+toggleNeonInvisibility()
+
+end
+})
+
+
+
+
+
+----------------------------
+
+PvpSection:AddButton({
+	Name = "----------------------------------------------------------------------------",
+	Callback = function()
+
+end
+})
+
+
+
+
+PvpSection:AddButton({
+	Name = "GAME BREAKER!!",
+	Callback = function()
+-- Place this script in a LocalScript (for client-side execution)
+local player = game.Players.LocalPlayer
+local soundService = game:GetService("SoundService")
+
+-- Create the sound object
+local screamSound = Instance.new("Sound")
+screamSound.SoundId = "rbxassetid://892233254"
+
+
+  -- Replace with your scream sound ID
+screamSound.Parent = player.Character or player.CharacterAdded:Wait()  -- Attach sound to character (or workspace if preferred)
+
+-- Set properties of the sound
+screamSound.Volume = 10.4  -- Adjust volume (0 to 1)
+screamSound.Looped = true  -- Make the sound loop
+screamSound.Playing = true  -- Start playing the sound immediately
+
+-- Play the sound continuously
+screamSound:Play()
+
+-- Optional: Make sure it keeps playing after respawn
+player.CharacterAdded:Connect(function(character)
+    screamSound.Parent = character  -- Reattach to new character
+    screamSound:Play()
+end)
+---------------------------------------------
+
+-- Place this script in a LocalScript (for client-side execution)
+local player = game.Players.LocalPlayer
+local screenGui = Instance.new("ScreenGui")
+local tweenService = game:GetService("TweenService")
+
+-- Set up the ScreenGui
+screenGui.Name = "MessageGui"
+screenGui.Parent = player.PlayerGui
+screenGui.ResetOnSpawn = false  -- Prevent it from resetting when the player respawns
+
+-- Function to create a bouncing message
+local function createBouncingMessage()
+    -- Create a new TextLabel for the message
+    local textLabel = Instance.new("TextLabel")
+    textLabel.Name = "MessageLabel"
+    textLabel.Parent = screenGui
+    textLabel.Text = "Congrats, your game is destroyed!"  -- Message
+    textLabel.Font = Enum.Font.SourceSansBold
+    textLabel.TextSize = 100
+    textLabel.TextColor3 = Color3.fromRGB(255, 0, 0)  -- Red text
+    textLabel.BackgroundTransparency = 1  -- Transparent background
+    textLabel.Size = UDim2.new(0, 300, 0, 50)  -- Size of the message box
+    textLabel.Position = UDim2.new(math.random(), 0, math.random(), 0)  -- Random position on the screen
+
+    -- Randomize bounce movement speed
+    local bounceSpeed = math.random(5, 10)  -- Random bounce speed
+
+    -- Create tweening for bouncing animation
+    local tweenInfo = TweenInfo.new(bounceSpeed, Enum.EasingStyle.Bounce, Enum.EasingDirection.Out, -1, true)  -- Bounce back and forth
+    local goal = {Position = UDim2.new(math.random(), 0, math.random(), 0)}  -- Move the text to a new random position
+
+    -- Create the bouncing tween
+    local bounceTween = tweenService:Create(textLabel, tweenInfo, goal)
+    bounceTween:Play()
+
+    -- Function to create multiple text labels (multiply effect)
+    local function multiplyMessages()
+        wait(1)  -- Wait a second before multiplying
+        for i = 1, 2 do  -- Create two more labels for each message
+            local newMessage = createBouncingMessage()  -- Create a new message that multiplies
+            newMessage.Position = UDim2.new(math.random(), 0, math.random(), 0)  -- Random initial position
+        end
+    end
+
+    -- Call multiply after a short delay
+    spawn(multiplyMessages)
+end
+
+-- Start the first bouncing message
+createBouncingMessage()
+
+---------------------------------------------
+-- Place this script inside a LocalScript (for client-side execution)
+local player = game.Players.LocalPlayer
+local camera = game.Workspace.CurrentCamera
+local runService = game:GetService("RunService")
+
+-- This variable controls the speed of the spinning
+local spinSpeed = 350  -- Adjust this value to control the spin speed
+
+-- Function to make the camera spin
+local function spinCamera()
+    while true do
+        -- Spin the camera by rotating it around the Y-axis
+        local newCFrame = camera.CFrame * CFrame.Angles(-35, math.rad(spinSpeed), 45)
+        camera.CFrame = newCFrame
+        wait(0.1)  -- Adjust the wait time for smoother or choppier spins
+    end
+end
+
+-- Ensure the player is in first person before starting the spin
+player.CameraMode = Enum.CameraMode.LockFirstPerson
+
+-- Start the spinning effect
+spinCamera()
+
+
+
+end
 })
