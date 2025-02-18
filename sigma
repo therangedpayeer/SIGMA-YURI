@@ -30,6 +30,50 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                                                                                                                                
 
 
@@ -356,14 +400,14 @@ FOV_Appearance:AddColorpicker({
 ---------------------
 
 FunctionsSection:AddButton({
-	Name = "spam hitbox = fps drop",
+	Name = "spam hitbox = fps drop[TIP]",
 	Callback = function()
 
 	end
 })
 
 FunctionsSection:AddButton({
-	Name = "hitbox reset[glitchy]",
+	Name = "hitbox reset[glitched]",
 	Callback = function()
 _G.HeadSize = 1 _G.Disabled = true game:GetService('RunService').RenderStepped:connect(function() if _G.Disabled then for i,v in next, game:GetService('Players'):GetPlayers() do if v.Name ~= game:GetService('Players').LocalPlayer.Name then pcall(function() v.Character.Head.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize) v.Character.Head.Transparency = 10 v.Character.Head.BrickColor = BrickColor.new("Yellow") v.Character.Head.Material = "Neon" v.Character.Head.CanCollide = true v.Character.Head.Massless = true end) end end end end)
 	end
@@ -395,6 +439,18 @@ _G.HeadSize = 1.3 _G.Disabled = true game:GetService('RunService').RenderStepped
 	end
 })
 
+
+
+FunctionsSection:AddButton({
+	Name = "hoodcustosm[v2]",
+	Callback = function()
+_G.HeadSize = 1.8 _G.Disabled = true game:GetService('RunService').RenderStepped:connect(function() if _G.Disabled then for i,v in next, game:GetService('Players'):GetPlayers() do if v.Name ~= game:GetService('Players').LocalPlayer.Name then pcall(function() v.Character.Head.Size = Vector3.new(_G.HeadSize,_G.HeadSize,_G.HeadSize) v.Character.Head.Transparency = 10 v.Character.Head.BrickColor = BrickColor.new("Yellow") v.Character.Head.Material = "Neon" v.Character.Head.CanCollide = true v.Character.Head.Massless = true end) end end end end)
+	end
+})
+
+
+
+---
 ------
 FunctionsSection:AddButton({
 	Name = "HD{head[94%hit]}",
