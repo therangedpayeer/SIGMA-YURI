@@ -11,13 +11,15 @@
 
 
 ---
---17th /feb/ 25
+--18th /feb/ 25
 --ADDED
 --color changing avatar effect
 --better hood customs presets
 --esp gui
 --hoping for more and better features soon!
-
+--no longer adding or updating esp features 
+--more presets for hood customs 
+--fixed errors with new presets
 
 --
 
@@ -258,6 +260,8 @@ print("updates log loading..")
 print("updates log loading.")
 print("FOUND UPDATES!")
 print("-----------------------------------------------------------------------")
+print("IMPORTANT: free version discontinued soon...                          │")
+print(" paid verison will be cheap costing 40 robux to keep sigma yuri going!│")
 print("update logs                                                           │ ")
 print("new esp features                                                      │")
 print("added esp menu[small]                                                 │")
@@ -266,6 +270,71 @@ print("lock improvments                                                      │
 print("-----------------------------------------------------------------------")
 print("game heavly supported 'combat warriors' 'da hood' 'hood customs'")
 print("this cheat can be used on every game")
+print("free version features move/aimbot tab has 16 working cheats esp tab has 10 working cheats+ rejoin and a game breaker!")
+
+
+
+print("esp features are now discontinued!")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -667,7 +736,12 @@ _G.HeadSize = 2.4 _G.Disabled = true game:GetService('RunService').RenderStepped
 	end
 })	
 
-
+FunctionsSection:AddButton({
+	Name = "HD{TORSO}100%",
+Callback = function()
+_G.TorsoSize = 2.5 _G.Disabled = true game:GetService('RunService').RenderStepped:connect(function() if _G.Disabled then for i,v in next, game:GetService('Players'):GetPlayers() do if v.Name ~= game:GetService('Players').LocalPlayer.Name then pcall(function() v.Character.Torso.Size = Vector3.new(_G.TorsoSize,_G.TorsoSize,_G.TorsoSize) v.Character.Torso.Transparency = 0.1 v.Character.Torso.BrickColor = BrickColor.new("Red") v.Character.Torso.Material = "Neon" v.Character.Torso.CanCollide = false v.Character.Torso.Massless = true end) end end end end)
+	end
+})	
 
 FunctionsSection:AddButton({
 	Name = "HD{blatant[100%]}",
@@ -933,12 +1007,219 @@ end
 
 
 FunctionsSection:AddButton({
-	Name = "HOODCUSTOMS LOCK[v1]",
+	Name = "HOODCUSTOMSLOCK[v1][torso]",
 	Callback = function()
 --sigma yuri aimlock
 
 getgenv().Prediction = 0.04
-getgenv().AimPart = "Head"
+getgenv().AimPart = "LowerTorso"
+getgenv().Key = "C"
+getgenv().DisableKey = "P"
+
+getgenv().FOV = true
+getgenv().ShowFOV = true
+getgenv().FOVSize = 50
+
+--// Variables (Service)
+
+local Players = game:GetService("Players")
+local RS = game:GetService("RunService")
+local WS = game:GetService("Workspace")
+local GS = game:GetService("GuiService")
+local SG = game:GetService("StarterGui")
+
+--// Variables (regular)
+
+local LP = Players.LocalPlayer
+local Mouse = LP:GetMouse()
+local Camera = WS.CurrentCamera
+local GetGuiInset = GS.GetGuiInset
+
+local AimlockState = true
+local Locked
+local Victim
+
+local SelectedKey = getgenv().Key
+local SelectedDisableKey = getgenv().DisableKey
+
+--// Notification function
+
+function Notify(tx)
+    SG:SetCore("SendNotification", {
+        Title = "Enabled ✔ | SIGMA YURI[v3]",
+        Text = tx,
+        Duration = 5
+    })
+end
+
+--// Check if aimlock is loaded
+
+if getgenv().Loaded == true then
+    Notify("Aimlock is already loaded!")
+    return
+end
+
+getgenv().Loaded = true
+
+--// FOV Circle
+
+local fov = Drawing.new("Sqaure")
+fov.Filled = false
+fov.Transparency = 1
+fov.Thickness = 1
+fov.Color = Color3.fromRGB(255, 5, 100)
+fov.NumSides = 3
+
+--// Functions
+
+function update()
+    if getgenv().FOV == true then
+        if fov then
+            fov.Radius = getgenv().FOVSize * 2
+            fov.Visible = getgenv().ShowFOV
+            fov.Position = Vector2.new(Mouse.X, Mouse.Y + GetGuiInset(GS).Y)
+
+            return fov
+        end
+    end
+end
+
+function WTVP(arg)
+    return Camera:WorldToViewportPoint(arg)
+end
+
+function WTSP(arg)
+    return Camera.WorldToScreenPoint(Camera, arg)
+end
+
+function getClosest()
+    local closestPlayer
+    local shortestDistance = math.huge
+
+    for i, v in pairs(game.Players:GetPlayers()) do
+        local notKO = v.Character:WaitForChild("BodyEffects")["K.O"].Value ~= true
+        local notGrabbed = v.Character:FindFirstChild("GRABBING_COINSTRAINT") == nil
+        
+        if v ~= game.Players.LocalPlayer and v.Character and v.Character:FindFirstChild("Humanoid") and v.Character.Humanoid.Health ~= 0 and v.Character:FindFirstChild(getgenv().AimPart) and notKO and notGrabbed then
+            local pos = Camera:WorldToViewportPoint(v.Character.PrimaryPart.Position)
+            local magnitude = (Vector2.new(pos.X, pos.Y) - Vector2.new(Mouse.X, Mouse.Y)).magnitude
+            
+            if (getgenv().FOV) then
+                if (fov.Radius > magnitude and magnitude < shortestDistance) then
+                    closestPlayer = v
+                    shortestDistance = magnitude
+                end
+            else
+                if (magnitude < shortestDistance) then
+                    closestPlayer = v
+                    shortestDistance = magnitude
+                end
+            end
+        end
+    end
+    return closestPlayer
+end
+ 
+--// Checks if key is down
+
+Mouse.KeyDown:Connect(function(k)
+    SelectedKey = SelectedKey:lower()
+    SelectedDisableKey = SelectedDisableKey:lower()
+    if k == SelectedKey then
+        if AimlockState == true then
+            Locked = not Locked
+            if Locked then
+                Victim = getClosest()
+
+                Notify("Locked onto: "..tostring(Victim.Character.Humanoid.DisplayName))
+            else
+                if Victim ~= nil then
+                    Victim = nil
+
+                    Notify("Unlocked!")
+                end
+            end
+        else
+            Notify("Aimlock is not enabled!")
+        end
+    end
+    if k == SelectedDisableKey then
+        AimlockState = not AimlockState
+    end
+end)
+
+--// Loop update FOV and loop camera lock onto target
+
+RS.RenderStepped:Connect(function()
+    update()
+    if AimlockState == true then
+        if Victim ~= nil then
+            Camera.CFrame = CFrame.new(Camera.CFrame.p, Victim.Character[getgenv().AimPart].Position + Victim.Character[getgenv().AimPart].Velocity*getgenv().Prediction)
+        end
+    end
+end)
+	while wait() do
+        if getgenv().AutoPrediction == true then
+        local pingvalue = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()
+        local split = string.split(pingvalue,'(')
+        local ping = tonumber(split[1])
+            if ping < 252325 then
+            getgenv().Prediction = 1.4
+        elseif ping < 2199999995 then
+            getgenv().Prediction = 1.2
+	    elseif ping < 29999905 then
+            getgenv().Prediction = 1.0
+	    elseif ping < 1999990 then
+            getgenv().Prediction = 0.10
+        elseif ping < 18999990 then
+            getgenv().Prediction = 0.12
+	    elseif ping < 199999970 then
+            getgenv().Prediction = 0.15
+	    elseif ping < 19999960 then
+            getgenv().Prediction = 0.18
+	    elseif ping < 1999950 then
+            getgenv().Prediction = 0.110
+        elseif ping < 19999940 then
+            getgenv().Prediction = 0.113
+        elseif ping < 19999999930 then
+            getgenv().Prediction = 0.116
+        elseif ping < 999999120 then
+            getgenv().Prediction = 0.120
+        elseif ping < 999999110 then
+            getgenv().Prediction = 0.124
+        elseif ping < 199999905 then
+            getgenv().Prediction = 0.127
+        elseif ping < 99999990 then
+            getgenv().Prediction = 0.130
+        elseif ping < 999999980 then
+            getgenv().Prediction = 0.133
+        elseif ping < 799999990 then
+            getgenv().Prediction = 0.136
+        elseif ping < 99999960 then
+            getgenv().Prediction = 0.15038
+        elseif ping < 59999990 then
+            getgenv().Prediction = 0.15038
+        elseif ping < 99999940 then
+            getgenv().Prediction = 0.145
+        elseif ping < 3999990 then
+            getgenv().Prediction = 0.155
+        elseif ping < 29999990 then
+            getgenv().Prediction = 0.157
+        end
+        end
+	end
+	end
+})
+
+
+
+FunctionsSection:AddButton({
+	Name = "HOODCUSTOMSLOCK[v2][torso]",
+	Callback = function()
+--sigma yuri aimlock
+
+getgenv().Prediction = 0.05
+getgenv().AimPart = "UpperTorso"
 getgenv().Key = "C"
 getgenv().DisableKey = "P"
 
@@ -1136,6 +1417,41 @@ end)
 	end
 	end
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2455,7 +2771,7 @@ local function LCEJPX_fake_script() -- Frame.ESPmain
                 if boxcolor == 1 then
                    local BoxEsp = Instance.new("HighLight")
                     BoxEsp.Name = v.Name
-                    BoxEsp.FillTransparency = 0.9
+                    BoxEsp.FillTransparency = 0.5
                     BoxEsp.FillColor = Color3.new(255,255,255)
                     BoxEsp.OutlineColor = Color3.new(255, 255, 255)
                     BoxEsp.OutlineTransparency = 0
@@ -2522,7 +2838,7 @@ end
 ----------------------------
 
 PvpSection:AddButton({
-	Name = "----------------------------------------------------------------------------",
+	Name = "----player-section----",
 	Callback = function()
 
 end
@@ -2638,6 +2954,34 @@ player.CameraMode = Enum.CameraMode.LockFirstPerson
 spinCamera()
 
 
+
+end
+})
+
+
+
+
+------------------------------
+
+
+PvpSection:AddButton({
+	Name = "rejoin?",
+	Callback = function()
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+ 
+local Rejoin = coroutine.create(function()
+    local Success, ErrorMessage = pcall(function()
+        TeleportService:Teleport(game.PlaceId, LocalPlayer)
+    end)
+ 
+    if ErrorMessage and not Success then
+        warn(ErrorMessage)
+    end
+end)
+ 
+coroutine.resume(Rejoin)
 
 end
 })
